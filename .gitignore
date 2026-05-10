@@ -427,3 +427,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+# Ignore build output folders (extra safety)
+bin/
+obj/
