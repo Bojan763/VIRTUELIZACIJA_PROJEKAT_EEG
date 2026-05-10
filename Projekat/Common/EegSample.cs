@@ -46,5 +46,25 @@ namespace Common
         [DataMember]
         public int RowIndex { get; set; }
 
+        public EegSample(DateTime timeStamp, double aF3, double t7, double pz, double t8, double aF4, double attention, double engagement, double excitement, double interest, double relaxation, double stress, int battery, int contactQuality, int slideIndex, int setIndex, int rowIndex)
+        {
+            this.TimeStamp = timeStamp;
+            this.AF3 = aF3;
+            this.T7 = t7;
+            this.Pz = pz;
+            this.T8 = t8;
+            this.AF4 = aF4;
+            this.Attention = attention;
+            this.Engagement = engagement;
+            this.Excitement = excitement;
+            this.Interest = interest;
+            this.Relaxation = relaxation;
+            this.Stress = stress;
+            this.Battery = battery;
+            this.ContactQuality = contactQuality;
+            this.SlideIndex = slideIndex;
+            this.SetIndex = setIndex;
+            this.RowIndex = rowIndex;
+        }
     }
 }

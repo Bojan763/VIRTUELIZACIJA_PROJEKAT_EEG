@@ -16,5 +16,11 @@ namespace Common
         public string Message {  get; set; }
         [DataMember]
         public string Status { get; set; }
+        public AckResponse(bool success, string message, string status)
+        {
+            this.Success = success;
+            this.Message = message;
+            this.Status = status;
+        } 
     }
 }

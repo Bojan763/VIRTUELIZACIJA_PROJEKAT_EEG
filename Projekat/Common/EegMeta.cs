@@ -19,5 +19,12 @@ namespace Common
         
         [DataMember]
         public string SchemaVersion { get; set; }
+
+        public EegMeta(string participantId, string fileName, int totalRows)
+        {
+            this.ParticipantId = participantId;
+            this.FileName = fileName;
+            this.TotalRows = totalRows;
+        }
     }
 }
