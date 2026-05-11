@@ -44,10 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AckResponse.cs" />
+    <Compile Include="DataFormatFault.cs" />
     <Compile Include="EegMeta.cs" />
     <Compile Include="EegSample.cs" />
     <Compile Include="IEEGService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationFault.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

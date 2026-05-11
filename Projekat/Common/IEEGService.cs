@@ -11,9 +11,13 @@ namespace Common
     public interface IEEGService
     {
         [OperationContract]
-        AckResponse StartSession(EegMeta meta);
-        [OperationContract]
+        [FaultContract(typeof(DataFormatFault))]
+        [FaultContract(typeof(ValidationFault))]
         AckResponse PushSample(EegMeta meta);
+
+        [OperationContract]
+        AckResponse StartSession(EegMeta meta);
+        
         [OperationContract]
         AckResponse EndSession();
     }
