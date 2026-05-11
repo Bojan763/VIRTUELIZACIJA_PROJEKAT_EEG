@@ -1,4 +1,5 @@
 ﻿using Common;
+using Service.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,41 @@ namespace Service
 {
     public class EEGService : IEEGService
     {
+        private EEGValidator validator = new EEGValidator(); //za validacije
+
         public AckResponse EndSession()
         {
-            throw new NotImplementedException();
+            return new AckResponse
+            {
+                Success = true,
+                Message = "Session ended",
+                Status = "COMPLETED"
+
+            };
         }
 
-        public AckResponse PushSample(EegMeta meta)
+        public AckResponse PushSample(EegSample sample)
         {
-            throw new NotImplementedException();
+            validator.ValidateSample(sample);
+
+            return new AckResponse
+            {
+                Success = true,
+                Message = "Sample received",
+                Status = "IN_PROGRESS"
+
+            };
         }
 
         public AckResponse StartSession(EegMeta meta)
         {
-            throw new NotImplementedException();
+            return new AckResponse
+            {
+                Success = true,
+                Message = "Session started",
+                Status = "IN_PROGRESS"
+
+            };
         }
     }
 }

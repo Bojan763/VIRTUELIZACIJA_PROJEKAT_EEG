@@ -22,5 +22,9 @@ namespace Common
             this.Message = message;
             this.Status = status;
         } 
+        public AckResponse() 
+        { 
+        
+        }
     }
 }

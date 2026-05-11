@@ -13,7 +13,7 @@ namespace Common
         [OperationContract]
         [FaultContract(typeof(DataFormatFault))]
         [FaultContract(typeof(ValidationFault))]
-        AckResponse PushSample(EegMeta meta);
+        AckResponse PushSample(EegSample sample);
 
         [OperationContract]
         AckResponse StartSession(EegMeta meta);
