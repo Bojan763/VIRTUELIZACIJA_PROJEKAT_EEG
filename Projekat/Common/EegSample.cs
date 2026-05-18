@@ -46,6 +46,9 @@ namespace Common
         [DataMember]
         public int RowIndex { get; set; }
 
+        public EegSample()
+        {
+        }
         public EegSample(DateTime timeStamp, double aF3, double t7, double pz, double t8, double aF4, double attention, double engagement, double excitement, double interest, double relaxation, double stress, int battery, int contactQuality, int slideIndex, int setIndex, int rowIndex)
         {
             this.TimeStamp = timeStamp;

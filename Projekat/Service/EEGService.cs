@@ -22,7 +22,6 @@ namespace Service
 
             };
         }
-
         public AckResponse PushSample(EegSample sample)
         {
             validator.ValidateSample(sample);
