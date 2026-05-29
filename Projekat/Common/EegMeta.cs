@@ -26,5 +26,6 @@ namespace Common
             this.FileName = fileName;
             this.TotalRows = totalRows;
         }
+        public EegMeta() { }
     }
 }

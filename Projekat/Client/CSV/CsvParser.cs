@@ -49,6 +49,7 @@ namespace Client.CSV
         }
         private EegSample ParseLine(string line, int rowIndex)
         {
+            
             string[] p = line.Split(',');
 
             return new EegSample

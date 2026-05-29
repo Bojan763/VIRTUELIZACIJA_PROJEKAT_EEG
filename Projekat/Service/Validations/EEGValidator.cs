@@ -22,7 +22,7 @@ namespace Service.Validations
                         Message = "Sample is null" });
             }
             ValidateTimestamp(sample);
-            ValidateRowIndex(sample);
+           // ValidateRowIndex(sample);
             ValidateBattery(sample);
             ValidateBattery(sample);
             ValidateContactQuality(sample);
@@ -39,7 +39,7 @@ namespace Service.Validations
                     });
             }
         }
-        private void ValidateRowIndex(EegSample sample)
+       /* private void ValidateRowIndex(EegSample sample)
         {
             if (sample.RowIndex <= lastRowIndex)
             {
@@ -49,8 +49,9 @@ namespace Service.Validations
                         Message = "Row index must grow monotonically"
                     });
             }
-            sample.RowIndex = lastRowIndex;
-        }
+
+            lastRowIndex = sample.RowIndex;
+        }*/
         private void ValidateBattery(EegSample sample)
         {
             if (sample.Battery < 0 || sample.Battery > 100)

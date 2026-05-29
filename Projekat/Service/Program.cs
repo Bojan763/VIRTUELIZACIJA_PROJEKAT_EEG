@@ -12,13 +12,19 @@ namespace Service
     {
         static void Main(string[] args)
         {
-            ServiceHost host = new ServiceHost(typeof(EEGService));
-            host.Open();
-            Console.WriteLine("EEG Service started, press any key to close it.");
-            Console.ReadKey();
-
-            host.Close();
-            Console.WriteLine("EEG Service is closed");
+            ServiceHost host = new ServiceHost(new EEGService());
+            try
+            {
+                host.Open();
+                Console.WriteLine("EEG Service started.");
+                Console.ReadLine();
+                host.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                host.Abort();
+            }
         }
     }
 }
