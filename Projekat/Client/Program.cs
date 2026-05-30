@@ -47,7 +47,7 @@ namespace Client
                     // STREAMING
                     foreach (var sample in samples)
                     {
-                        Console.WriteLine("KLIJENT: " + sample.RowIndex);
+
                         AckResponse resp = proxy.PushSample(sample);
                         Console.WriteLine(resp.Status);
                     }

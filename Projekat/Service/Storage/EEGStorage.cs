@@ -21,7 +21,6 @@ public class EEGStorage : IDisposable
 
     public void SaveSample(EegSample s)
     {
-        Console.WriteLine("SERVER: " + s.RowIndex);
         sessionWriter.WriteLine(
             $"{s.RowIndex},{s.TimeStamp},{s.AF3},{s.T7},{s.Pz}");
     }
