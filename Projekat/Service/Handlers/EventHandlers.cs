@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Service.EventArgs;
 using System;
 
 namespace Service.Handlers
@@ -23,6 +23,11 @@ namespace Service.Handlers
         public void WarningHandler(object sender, WarningEventArgs e)
         {
             Console.WriteLine($"WARNING [{e.WarningType}] {e.Message}");
+        }
+        public void AttentionSpikeHandler(object sender, AnalyticsEventArgs e)
+        {
+            Console.WriteLine($"SPIKE [{e.Metric}] {e.Direction} " + $"DELTA={e.Delta} " +
+                $"({e.PreviousValue} → {e.CurrentValue})");
         }
     }
 }

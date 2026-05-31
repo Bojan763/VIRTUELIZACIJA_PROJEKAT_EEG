@@ -1,10 +1,11 @@
-﻿namespace Common
+﻿namespace Service
 {
     public enum WarningType
     {
         BatteryLow,
         ContactQualityLow,
         AttentionSpike,
-        ChannelOutOfBand
+        ChannelOutOfBand,
+        EngagementDrop
     }
 }

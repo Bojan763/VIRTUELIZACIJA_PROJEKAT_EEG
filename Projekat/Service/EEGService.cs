@@ -1,4 +1,5 @@
 ﻿using Common;
+using Service.EventArgs;
 using Service.Events;
 using Service.Handlers;
 using Service.Validations;
@@ -22,7 +23,12 @@ namespace Service
         private EEGEventManager eventManager = new EEGEventManager(); // dogadjaji
         private EventHandlers handlers = new EventHandlers(); // handleri za dogadjaje
 
+        private double lastAttention = -1;
+        private double lastEngagement = -1;
+
         private int receivedSamples = 0;
+
+        private string currentParticipantId; //da bismo u dogadjaj za engagement cuvali trenutnog pariticpantId
 
         public EEGService()
         {
@@ -33,6 +39,8 @@ namespace Service
             eventManager.OnTransferCompleted += handlers.TransferCompletedHandler;
 
             eventManager.OnWarningRaised += handlers.WarningHandler;
+
+            eventManager.OnAttentionSpike +=  handlers.AttentionSpikeHandler;
 
         }
         public AckResponse EndSession()
@@ -51,10 +59,51 @@ namespace Service
         public AckResponse PushSample(EegSample sample)
         {
            int batteryLowThreshold = int.Parse(ConfigurationManager.AppSettings["BatteryLowThreshold"]);
-
            int contactQualityMin = int.Parse(ConfigurationManager.AppSettings["ContactQualityMin"]);
-
+           int attentionSpikeThreshold = int.Parse(ConfigurationManager.AppSettings["AttentionSpikeThreshold"]);
+           int engagementDropThreshold = int.Parse(ConfigurationManager.AppSettings["EngagementDropThreshold"]);
            validator.ValidateSample(sample);
+
+            // -------- ATTENTION ----------
+            if (lastAttention != -1)
+            {
+                double deltaAttention = sample.Attention - lastAttention;
+
+                if (Math.Abs(deltaAttention) > attentionSpikeThreshold)
+                {
+                    eventManager.RaiseAttentionSpike(
+                        new AnalyticsEventArgs
+                        {
+                            ParticipantId = currentParticipantId,
+                            Timestamp = sample.TimeStamp,
+                            RowIndex = sample.RowIndex,
+                            PreviousValue = lastAttention,
+                            CurrentValue = sample.Attention,
+                            Delta = deltaAttention,
+                            Metric = "Attention",
+                            Direction = deltaAttention > 0 ? "UP" : "DOWN"
+                        });
+                }
+            }
+
+            lastAttention = sample.Attention;
+
+            // -------- ENGAGEMENT ----------
+            if (lastEngagement != -1)
+            {
+                double deltaEngagement = sample.Engagement - lastEngagement;
+
+                if (deltaEngagement < -engagementDropThreshold)
+                {
+                    eventManager.RaiseWarning(
+                        WarningType.EngagementDrop,
+                        $"Engagement dropped: {deltaEngagement}");
+                }
+            }
+
+
+
+
 
             if (sample.Battery < batteryLowThreshold)
             {
@@ -66,11 +115,8 @@ namespace Service
             }
 
             storage.SaveSample(sample);
-
-            eventManager.RaiseSampleReceived(receivedSamples); //dogadjaj
-
-
             receivedSamples++;
+            eventManager.RaiseSampleReceived(receivedSamples); //dogadjaj
             return new AckResponse
             {
                 Success = true,
@@ -83,6 +129,8 @@ namespace Service
         {
             receivedSamples = 0;
             storage.Start(meta);
+
+            currentParticipantId = meta.ParticipantId;
 
             eventManager.RaiseTransferStarted(meta.ParticipantId); //dogadjaj
 

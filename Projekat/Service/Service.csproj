@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EEGService.cs" />
+    <Compile Include="EventArgs\AnalyticsEventArgs.cs" />
     <Compile Include="EventArgs\TransferEventArgs.cs" />
     <Compile Include="EventArgs\WarningEventArgs.cs" />
     <Compile Include="Events\EEGEventManager.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\EEGStorage.cs" />
     <Compile Include="Validations\EEGValidator.cs" />
+    <Compile Include="WarningType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

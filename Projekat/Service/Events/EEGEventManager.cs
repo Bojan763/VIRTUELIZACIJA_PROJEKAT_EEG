@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Service.EventArgs;
 using System;
 
 namespace Service.Events
@@ -12,6 +12,8 @@ namespace Service.Events
         public event EventHandler<TransferEventArgs> OnTransferCompleted;
 
         public event EventHandler<WarningEventArgs> OnWarningRaised;
+
+        public event EventHandler<AnalyticsEventArgs> OnAttentionSpike;
 
         public void RaiseTransferStarted(string participantId)
         {
@@ -44,6 +46,10 @@ namespace Service.Events
                 WarningType = type,
                 Message = message
             });
+        }
+        public void RaiseAttentionSpike(AnalyticsEventArgs args)
+        {
+            OnAttentionSpike?.Invoke(this, args);
         }
     }
 }
